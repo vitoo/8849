@@ -1,26 +1,37 @@
 
 
 
-# Installation
+## 1) Installation
 
-cd app
-cp .env.example .env
-cd ..
-docker compose up -d
-docker compose exec app bash -c "php artisan key:generate"
-docker compose exec app bash -c "php artisan db:seed "
+Attention : ces conteneurs vont utiliser les ports local : 5000, 8000, 5432, 6379, 3306 
 
-## 1) créer un user admin dans Ayon 
+Lancez ces commandes dans l'ordre :
+
+    cd app
+    cp .env.example .env
+    cd ..
+    
+    docker compose run app bash -c "composer install"
+    docker compose run app bash -c "php artisan key:generate"
+    docker compose run app bash -c "php artisan migrate --seed"
+    docker compose run app bash -c "npm i ; npm run build"
+    docker compose up -d
+
+
+## 2) Créer un user admin dans Ayon 
 
 user and password : admin/admin 
 
 http://localhost:5000/
 
-## 2) ajouter un talent dans l'app laravel 
+## 3) Ajouter un talent dans l'app laravel 
 
-connectez-vous avec ce user:  admin@example.com / password : admin 
+Connectez-vous à l'app laravel : http://localhost:8000/talents
 
-http://localhost:8000/talents
+Avec ce user admin :
+
+    email : admin@example.com
+    password : admin 
 
 
 Vous pouvez voir les appels vers Ayon dans Telescope :
@@ -28,5 +39,19 @@ Vous pouvez voir les appels vers Ayon dans Telescope :
 http://localhost:8000/telescope/client-requests
 
 
+Note : je n'ai pas mis le role dans le model Talent, car la doc d'Ayon ne montre pas comment gérer ça via l'url /api/users  
 
-Note : je n'ai pas mis le role dans le model Talent, car je crois qu'on ne peut pas le mettre dans ayon via l'api users 
+
+## Contenu
+
+    app/ 
+    AyonSyncJob
+    TalentController
+    Vue : 
+    app/resources/js/pages/Talents
+    test :
+    TalentControllerTest
+
+    packages/laravel-ayon-connector/
+    AyonService
+    AyonServiceTest
