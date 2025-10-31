@@ -7,8 +7,17 @@
             "Vendor\\AyonApi\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Vendor\\AyonApi\\Tests\\": "tests/"
+        }
+    },
     "require": {
-        "php": "^8.2"       
+        "php": "^8.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.5.3",
+        "orchestra/testbench": "^10.0.0||^9.0.0"
     },
     "extra": {
         "laravel": {
