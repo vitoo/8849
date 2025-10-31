@@ -35,4 +35,10 @@ return [
         ],
     ],
 
+    'ayon' => [
+        'hostname' => env('AYON_HOSTNAME', 'ayon:5000'),
+        'username' => env('AYON_USERNAME', 'admin'),
+        'password' => env('AYON_PASSWORD', 'admin'),
+    ],
+
 ];
