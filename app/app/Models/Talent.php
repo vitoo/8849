@@ -3,11 +3,14 @@
 namespace App\Models;
 
 use App\Jobs\AyonSyncJob;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
 class Talent extends Model
 {
+    use HasFactory;
+    
     protected $table = 'talents'; 
     protected $fillable = [
         'username',
