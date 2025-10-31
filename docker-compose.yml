@@ -1,0 +1,106 @@
+services:
+  app:
+    build: .
+    container_name: app
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./app/:/var/www/html
+    depends_on:
+      - db
+      - ayon
+    command: php artisan serve --host=0.0.0.0 --port=8000
+
+  db:
+    image: mysql:8
+    environment:
+      MYSQL_DATABASE: laravel
+      MYSQL_ROOT_PASSWORD: secret
+    ports:
+      - "3306:3306"
+
+  horizon:
+    build: .
+    container_name: horizon
+    command: php artisan horizon
+    volumes:
+      - ./app:/var/www/html
+    depends_on:
+      - redis
+      - db
+      - ayon
+    restart: always
+
+  node:
+    build: .
+    container_name: node
+    working_dir: /var/www/html
+    volumes:
+      - ./app:/var/www/html
+    command: sh -c "npm install && npm run dev"
+    ports:
+      - "5173:5173"
+
+  postgres:
+    image: postgres:${AYON_STACK_POSTGRES_TAG:-15}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ayon"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+    expose: [5432]
+
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"
+      - "db:/var/lib/postgresql/data"
+
+    environment:
+      - "POSTGRES_USER=ayon"
+      - "POSTGRES_PASSWORD=ayon"
+      - "POSTGRES_DB=ayon"
+
+  redis:
+    image: redis:alpine
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+    expose: [6379]
+
+
+  ayon:
+    image: ynput/ayon:${AYON_STACK_SERVER_TAG:-latest}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/api/info"]
+      interval: 10s
+      timeout: 2s
+      retries: 3
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+
+    expose: [5000]
+    ports: 
+      - ${AYON_STACK_SERVER_PORT:-5000}:5000
+
+    volumes:
+      - "./addons:/addons"
+      - "./storage:/storage"
+
+      # comment out the following line on Windows
+      - "/etc/localtime:/etc/localtime:ro"
+
+      # uncomment the following line if you need to work on the backend code
+      # - "./backend:/backend"
+
+volumes:
+  db: {}
