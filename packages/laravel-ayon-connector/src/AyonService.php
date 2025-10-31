@@ -1,16 +1,14 @@
 <?php
 
-namespace App\Services;
+namespace Vendor\AyonApi;
 
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
 use Exception;
-use Illuminate\Support\Facades\Log;
 
 class AyonService
 {
     private string $baseUrl;
-    private ?string $token = null;
 
     public function __construct()
     {

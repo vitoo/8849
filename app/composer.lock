@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0c8bec0f3c9462feb50f44278a27ace8",
+    "content-hash": "17e8a48496a54b414b4b5829332c94e7",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -6432,6 +6432,35 @@
             "time": "2024-12-21T16:25:41+00:00"
         },
         {
+            "name": "vendor/laravel-ayon-connector",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "../packages/laravel-ayon-connector",
+                "reference": "2900013f653fe663c3d019d9eb29ea2642dc030c"
+            },
+            "require": {
+                "php": "^8.2"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Vendor\\AyonApi\\AyonServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Vendor\\AyonApi\\": "src/"
+                }
+            },
+            "description": "Laravel package to interact with Ayon API",
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
             "name": "vlucas/phpdotenv",
             "version": "v5.6.2",
             "source": {
@@ -9013,7 +9042,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": {
+        "vendor/laravel-ayon-connector": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

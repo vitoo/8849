@@ -3,7 +3,8 @@
 namespace App\Jobs;
 
 use App\Models\Talent;
-use App\Services\AyonService;
+// use App\Services\AyonService;
+use Vendor\AyonApi\AyonService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;

@@ -16,7 +16,8 @@
         "laravel/horizon": "^5.38",
         "laravel/telescope": "^5.15",
         "laravel/tinker": "^2.10.1",
-        "laravel/wayfinder": "^0.1.9"
+        "laravel/wayfinder": "^0.1.9",
+        "vendor/laravel-ayon-connector": "@dev"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
@@ -95,5 +96,11 @@
         }
     },
     "minimum-stability": "stable",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../packages/laravel-ayon-connector"
+        }
+    ]
 }

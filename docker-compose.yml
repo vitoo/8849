@@ -5,7 +5,8 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./app/:/var/www/html
+      - ./app:/var/www/html
+      - ./packages:/var/www/packages
     depends_on:
       - db
       - ayon
@@ -25,6 +26,7 @@ services:
     command: php artisan horizon
     volumes:
       - ./app:/var/www/html
+      - ./packages:/var/www/packages
     depends_on:
       - redis
       - db

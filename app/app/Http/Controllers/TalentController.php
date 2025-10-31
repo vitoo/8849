@@ -82,17 +82,6 @@ class TalentController extends Controller
     }
 
     /**
-     * Resynchronise tous les talents
-     */
-    public function syncAll()
-    {
-        AyonSyncJob::dispatch();
-
-        return redirect()->route('talents.index')
-            ->with('success', 'Synchronisation lancée');
-    }
-
-    /**
      * Resynchronise un talent spécifique
      */
     public function sync(Talent $talent)

@@ -1,0 +1,20 @@
+{
+    "name": "vendor/laravel-ayon-connector",
+    "description": "Laravel package to interact with Ayon API",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "Vendor\\AyonApi\\": "src/"
+        }
+    },
+    "require": {
+        "php": "^8.2"       
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Vendor\\AyonApi\\AyonServiceProvider"
+            ]
+        }
+    }
+}
