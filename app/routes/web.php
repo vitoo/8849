@@ -2,8 +2,13 @@
 
 use App\Http\Controllers\TalentController;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
-Route::redirect('/', '/talents');
+Route::redirect('/', '/talents')->name('home');
+
+Route::get('dashboard', function () {
+    return Inertia::render('Dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware(['auth'])->group(function () {
     Route::resource('talents', TalentController::class)
@@ -12,3 +17,5 @@ Route::middleware(['auth'])->group(function () {
     Route::post('talents/{talent}/sync', [TalentController::class, 'sync'])
         ->name('talents.sync');
 });
+
+require __DIR__.'/settings.php';

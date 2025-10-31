@@ -9,7 +9,6 @@ services:
       - ./packages:/var/www/packages
     depends_on:
       - db
-      - ayon
     command: php artisan serve --host=0.0.0.0 --port=8000
 
   db:
@@ -28,9 +27,9 @@ services:
       - ./app:/var/www/html
       - ./packages:/var/www/packages
     depends_on:
+      - app
       - redis
       - db
-      - ayon
     restart: always
 
   node:
@@ -39,6 +38,9 @@ services:
     working_dir: /var/www/html
     volumes:
       - ./app:/var/www/html
+      - ./packages:/var/www/packages
+    depends_on:
+      - app
     command: sh -c "npm install && npm run dev"
     ports:
       - "5173:5173"
