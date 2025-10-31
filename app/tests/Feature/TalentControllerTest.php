@@ -17,9 +17,10 @@ class TalentControllerTest extends TestCase
     {
         parent::setUp();
 
-        // Crée un user admin
         $this->admin = User::factory()->create(['is_admin' => true]);
         $this->user = User::factory()->create(['is_admin' => false]);
+
+        Queue::fake();
     }
 
     public function test_index_returns_ok()
