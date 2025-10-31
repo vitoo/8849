@@ -2,12 +2,12 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
-use App\Models\Talent;
 use App\Jobs\AyonSyncJob;
+use App\Models\Talent;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Queue;
-use App\Models\User;
+use Tests\TestCase;
 
 class TalentControllerTest extends TestCase
 {
@@ -22,13 +22,13 @@ class TalentControllerTest extends TestCase
         $this->user = User::factory()->create(['is_admin' => false]);
     }
 
-    public function testIndexReturnsOk()
+    public function test_index_returns_ok()
     {
         $response = $this->actingAs($this->admin)->get(route('talents.index'));
         $response->assertStatus(200);
     }
 
-    public function testStoreCreatesTalentAndDispatchesJob()
+    public function test_store_creates_talent_and_dispatches_job()
     {
         Queue::fake();
 
@@ -45,7 +45,7 @@ class TalentControllerTest extends TestCase
         Queue::assertPushed(AyonSyncJob::class);
     }
 
-    public function testUpdateTalentAndDispatchesJob()
+    public function test_update_talent_and_dispatches_job()
     {
         Queue::fake();
 
@@ -64,7 +64,7 @@ class TalentControllerTest extends TestCase
         Queue::assertPushed(AyonSyncJob::class);
     }
 
-    public function testDestroyTalentAsAdminDispatchesJob()
+    public function test_destroy_talent_as_admin_dispatches_job()
     {
         Queue::fake();
 
@@ -79,7 +79,7 @@ class TalentControllerTest extends TestCase
         Queue::assertPushed(AyonSyncJob::class);
     }
 
-    public function testDestroyTalentAsNonAdminReturns403()
+    public function test_destroy_talent_as_non_admin_returns403()
     {
         $talent = Talent::factory()->create();
 

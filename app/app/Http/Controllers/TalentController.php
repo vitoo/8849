@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Talent;
 use App\Jobs\AyonSyncJob;
+use App\Models\Talent;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 use Illuminate\Support\Str;
+use Inertia\Inertia;
 
 class TalentController extends Controller
 {
@@ -15,7 +15,7 @@ class TalentController extends Controller
         $perPage = 10; // items per page
         $paginated = Talent::orderBy('created_at', 'desc')
             ->paginate($perPage)
-            ->through(fn($talent) => [
+            ->through(fn ($talent) => [
                 'id' => $talent->id,
                 'username' => $talent->username,
                 'first_name' => $talent->first_name,
@@ -40,13 +40,13 @@ class TalentController extends Controller
         ]);
 
         // Generate base username
-        $baseUsername = Str::slug($validated['first_name'] . ' ' . $validated['last_name']);
+        $baseUsername = Str::slug($validated['first_name'].' '.$validated['last_name']);
         $username = $baseUsername;
         $i = 1;
 
         // Ensure uniqueness
         while (Talent::where('username', $username)->exists()) {
-            $username = $baseUsername . '-' . $i++;
+            $username = $baseUsername.'-'.$i++;
         }
 
         Talent::create([
@@ -58,13 +58,12 @@ class TalentController extends Controller
             ->with('success', 'Talent créé avec succès');
     }
 
-
     public function update(Request $request, Talent $talent)
     {
         $validated = $request->validate([
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
-            'email' => 'required|email|unique:talents,email,' . $talent->id,
+            'email' => 'required|email|unique:talents,email,'.$talent->id,
         ]);
 
         $talent->update($validated);

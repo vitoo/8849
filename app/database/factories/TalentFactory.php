@@ -14,12 +14,12 @@ class TalentFactory extends Factory
     {
         $firstName = $this->faker->firstName;
         $lastName = $this->faker->lastName;
-        $usernameBase = Str::slug($firstName . ' ' . $lastName);
+        $usernameBase = Str::slug($firstName.' '.$lastName);
 
         return [
             'first_name' => $firstName,
             'last_name' => $lastName,
-            'username' => $usernameBase . '-' . $this->faker->unique()->numberBetween(1, 9999),
+            'username' => $usernameBase.'-'.$this->faker->unique()->numberBetween(1, 9999),
             'email' => $this->faker->unique()->safeEmail,
             'synced_at' => $this->faker->optional()->dateTimeBetween('-1 year', 'now'),
         ];

@@ -14,13 +14,13 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('email')->unique();
-            $table->timestamp('synced_at')->nullable(); 
+            $table->timestamp('synced_at')->nullable();
             $table->timestamps();
-        }); 
+        });
     }
 
     public function down()
     {
-        Schema::dropIfExists('talents'); 
+        Schema::dropIfExists('talents');
     }
 };
